@@ -68,7 +68,6 @@ Some training tricks that matter for word-level language modeling using LSTM and
 
 
 6. **optimizer**
-SGD is proved better than adaptive optimizer like Adam in LM task empirically
 
 |  train/dev  ppl          | LSTM    | Transformer | 
 | :----------------------: | :-----: | :---------: | 
@@ -77,6 +76,7 @@ SGD is proved better than adaptive optimizer like Adam in LM task empirically
 | sgd + momentum(0.9)      |         |             |
 | sgd + weight decay(1e-4) |         |             |
 | adam + weght decay(1e-4) |         |             | 
+SGD is proved better than adaptive optimizer like Adam in LM task empirically
 
 
 7. **only for LSTM**
