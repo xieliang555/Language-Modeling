@@ -1,0 +1,30 @@
+data:
+    BSZ: 32
+    bptt_len: 35
+    vocabSize: 28913
+    data_root: '/home/xieliang/Data'
+    save_root: '/home/xieliang/Data/LM'
+model:
+    rnn:
+        nemd: 100
+        nhid: 256
+        nlayer: 2
+        drop_ratio: 0
+        tie_weight: False
+        drop_emd: False
+    transformer:
+        nemd: 512
+        drop_ratio: 0.2
+        drop_emd: False
+        nhead: 2
+        nhid: 512
+        nlayer: 1
+        tie_weight: False
+training:
+    model_type: 'rnn'
+    optim_type: 'sgd'
+    lr: 20
+    weight_decay: 0
+    momentum: 0
+    grad_clip: 0.25
+    lr_decay_factor: 4.0
