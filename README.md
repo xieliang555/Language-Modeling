@@ -89,7 +89,7 @@ SGD is proved better than adaptive optimizer like Adam in LM task empirically
 
 
 ## Results on three open datasets
-usingthe combined tricks of ...
+using the combined tricks of ...
 
 |  train/dev ppl | LSTM    | Transformer |
 |:-------------: | :-----: | :---------: | 
