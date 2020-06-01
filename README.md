@@ -12,13 +12,10 @@ language modeling using LSTM and transformer
 
 1. **model scale**
 
-|  train/dev ppl   | LSTM
-| Transformer | 
+|  train/dev ppl   | LSTM          | Transformer |    
 | :--------------: | :-----------: | :---------: | 
-|  small
-| 79.17/158.06  |             | 
-| medium           | 55.65/149.35  |
-|
+|  small           | 79.17/158.06  |             | 
+| medium           | 55.65/149.35  |             |
 | large            |               |             |
 
 
