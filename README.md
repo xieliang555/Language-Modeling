@@ -5,8 +5,7 @@ language modeling using LSTM and transformer
 
 ## Requirements
 - PyTorch 1.5.0
--
-torchtext 0.6.0
+- torchtext 0.6.0
 
 
 ## Tricks
