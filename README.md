@@ -1,6 +1,5 @@
 # Word-level language modeling
-Some training tricks that matter for word-level
-language modeling using LSTM and transformer
+Some training tricks that matter for word-level language modeling using LSTM and transformer
 
 
 ## Requirements
@@ -69,8 +68,7 @@ language modeling using LSTM and transformer
 
 
 6. **optimizer**  
-SGD is proved better than adaptive
-optimizer like Adam in LM task empirically
+SGD is proved better than adaptive optimizer like Adam in LM task empirically
 
 |  train/dev  ppl          | LSTM    | Transformer | 
 | :----------------------: | :-----: | :---------: | 
