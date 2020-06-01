@@ -67,7 +67,7 @@ Some training tricks that matter for word-level language modeling using LSTM and
 | 0.5          |         |             |
 
 
-6. **optimizer**  
+6. **optimizer**
 SGD is proved better than adaptive optimizer like Adam in LM task empirically
 
 |  train/dev  ppl          | LSTM    | Transformer | 
@@ -92,7 +92,7 @@ usingthe combined tricks of ...
 
 |  train/dev ppl | LSTM    | Transformer |
 |:-------------: | :-----: | :---------: | 
-|WikiText-2      |         |             |
+| WikiText-2     |         |             |
 | WikiText103    |         |             |
 | PennTreeBank   |         |             |
 
