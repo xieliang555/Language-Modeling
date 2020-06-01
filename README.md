@@ -21,77 +21,58 @@ language modeling using LSTM and transformer
 
 2. **batch size**
 
-|
-train/dev ppl   | LSTM    | Transformer | 
-| :-------------: | :-----: |
-:---------: | 
+|train/dev ppl    | LSTM    | Transformer | 
+| :-------------: | :-----: |:----------: | 
 |   32            |         |             | 
-|   64            |
-|             |
+|   64            |         |             |
 |   128           |         |             |
 
 
-3. **pretrained
-embedding**
+3. **pretrained embedding**
 
 |  train/dev ppl  | LSTM    | Transformer | 
-| :-------------: |
-:-----: | :---------: |
+| :-------------: |:------: | :---------: |
 | None            |         |             |
-| GloVe
-|         |             | 
+| GloVe           |         |             | 
 | FastText        |         |             |
-|
-CharNGram       |         |             |
+| CharNGram       |         |             |
    
    
 4. **tie embedding**
 
-|
-train/dev ppl  | LSTM    |  Transformer | 
-| :-------------: | :-----: |
-:---------: | 
-| False           |         |             | 
-| True            |
-|             |
+|train/dev ppl    | LSTM    |  Transformer | 
+| :-------------: | :-----: |:-----------: | 
+| False           |         |              | 
+| True            |         |              |
 
 
 5. **embedding dropout**
 
-| drop ratio   | LSTM    |
-Transformer | 
+| drop ratio   | LSTM    | Transformer | 
 | :----------: | :-----: | :---------: |
-| 0            |
-|             | 
+| 0            |         |             | 
 | 0.2          |         |             |
-| 0.5          |
-|             |
+| 0.5          |         |             |
 
 
 6. **optimizer**  
 SGD is proved better than adaptive
 optimizer like Adam in LM task empirically
 
-|  train/dev  ppl  | LSTM    |
-Transformer | 
-| :--------------: | :-----: | :---------: | 
-| sgd    |
-|             |
-| adam  |         |             | 
-| sgd + momentum(0.9)    |
-|             |
-| sgd + weight decay(1e-4)    |         |             |
-| adam +
-weght decay(1e-4)  |         |             | 
+|  train/dev  ppl          | LSTM    | Transformer | 
+| :----------------------: | :-----: | :---------: | 
+| sgd                      |         |             |
+| adam                     |         |             | 
+| sgd + momentum(0.9)      |         |             |
+| sgd + weight decay(1e-4) |         |             |
+| adam + weght decay(1e-4) |         |             | 
 
 
 7. **only for LSTM**
 
-|
-| skip connection    |  
+|                  | skip connection    |  
 | :--------------: | :----------------: | 
-|  train/dev
-ppl   |                    |            
+|  train/dev ppl   |                    |            
 
 
 >         
