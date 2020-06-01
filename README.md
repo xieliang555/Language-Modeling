@@ -10,6 +10,19 @@ language modeling using LSTM and transformer
 
 ## Tricks
 
+>         
+- Default dataset: WikiText-2  
+- Total training epoch: 40   
+- Model scale:  
+   - LSTM
+      - small: 50dim for embedding + 128dim for hidden units + 1hidden layer 
+      - medium: 100dim for embedding + 256dim for hidden units + 2hidden layer
+      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer
+   - Transformer
+      - small: 50dim for embedding+ 128dim for hidden units + 1hidden layer + 1 head
+      - medium: 100dim for embedding + 251dim for hidden units + 2 hidden layer + 2head
+      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer + 3head
+
 1. **model scale**
 
 |  train/dev ppl   | LSTM          | Transformer |    
@@ -74,19 +87,6 @@ optimizer like Adam in LM task empirically
 | :--------------: | :----------------: | 
 |  train/dev ppl   |                    |            
 
-
->         
-- Default dataset: WikiText-2  
-- Total training epoch: 40   
-- Model scale:  
-   - LSTM
-      - small: 50dim for embedding + 128dim for hidden units + 1hidden layer 
-      - medium: 100dim for embedding + 256dim for hidden units + 2hidden layer
-      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer
-   - Transformer
-      - small: 50dim for embedding+ 128dim for hidden units + 1hidden layer + 1 head
-      - medium: 100dim for embedding + 251dim for hidden units + 2 hidden layer + 2head
-      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer + 3head
 
 
 ## Results on three open datasets
