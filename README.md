@@ -1,5 +1,5 @@
 # Word-level language modeling
-Regularizations for word-level language model with LSTM and transformer. The project is based on the paper "Regularizing and Optimizing LSTM Language Models". [Code here](https://github.com/salesforce/awd-lstm-lm)
+Regularizations for word-level language model with LSTM and transformer. The repository is based on the paper [Regularizing and Optimizing LSTM Language Models](http://arxiv.org/abs/1708.02182). [Original code here](https://github.com/salesforce/awd-lstm-lm)
 
 
 ## Dependencies
@@ -49,13 +49,13 @@ Regularizations for word-level language model with LSTM and transformer. The pro
 
 
 
-## Ref
+## Reference
 
 1. https://github.com/pytorch/examples/tree/master/word_language_model
-2. Using the Output Embedding to Improve Language Models
-3. Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling
-4. A theoretically grounded application of dropout in recurrent neural networks
-5. Revisiting activation regularization for language rnns
-6. Enriching Word Vectors with Subword Information
-7. Efficient softmax approximation for GPUs
-8. Layer Normalization
+2. [Using the Output Embedding to Improve Language Models](https://arxiv.org/abs/1608.05859)
+3. [Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling](https://arxiv.org/abs/1611.01462)
+4. [A theoretically grounded application of dropout in recurrent neural networks](https://arxiv.org/abs/1512.05287)
+5. [Revisiting activation regularization for language rnns](https://arxiv.org/abs/1708.01009)
+6. [Enriching Word Vectors with Subword Information](https://arxiv.org/abs/1607.04606)
+7. [Efficient softmax approximation for GPUs](https://arxiv.org/abs/1609.04309)
+8. [Layer Normalization](https://arxiv.org/abs/1607.06450)
