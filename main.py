@@ -1,4 +1,5 @@
 import torch
+import torchtext
 import torch.nn as nn
 import torch.optim as optim
 from torchtext.datasets import WikiText2
@@ -86,7 +87,13 @@ TEXT = Field(lower=True, include_lengths=False, batch_first=False)
 # TEXT： split string into tokens
 trainSet, devSet, testSet = WikiText2.splits(
     text_field=TEXT, root=config.data.data_root) 
-TEXT.build_vocab(trainSet)
+if config.model.rnn.pretrained_embedding:
+    vec = torchtext.vocab.FastText(
+        language='en', cache=config.data.fasttext_root)
+    assert vec.dim == config.model.rnn.nemd
+else:
+    vec = None
+TEXT.build_vocab(trainSet, vectors=vec)
 # TEXT: numericalize, pad, add init_token and eos_token
 trainLoader, devLoader, testLoader = BPTTIterator.splits(
     (trainSet, devSet, testSet), batch_size=config.data.BSZ, 
@@ -98,7 +105,7 @@ assert len(TEXT.vocab)==config.data.vocabSize
 # Define model
 ###############################################################################
 if config.training.model_type == 'rnn':
-    net = model.RNNLM(config).to(device)
+    net = model.RNNLM(config, TEXT).to(device)
 elif config.training.model_type == 'transformer':
     net = model.TransformerLM(config).to(device)
 if config.training.optim_type == 'sgd':

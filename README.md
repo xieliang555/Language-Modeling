@@ -17,21 +17,23 @@ Regularizations for word-level language model with LSTM and transformer.
 |   + embedding dropout [3]          |  46.69/101.54            |    40   |
 |   + AR [4]                         |  52.07/97.22             |    40   |
 |   + TAR [4]                        |  53.87/96.91             |    40   |
-|   + adaptive softmax [5]           |                          |         |
-|   + pretrained embedding           |                          |         |
+|   + fasttext embedding [5]         |  48.80/88.01             |    40   |
+|   + adaptive softmax [6]           |                          |         |
 |   + layer normalize                |                          |         |
 |   + skip connection                |                          |         |
 
 
-**Default Setup**
+**Setup**
+- dataset: WikiText-2
 - nemd:400, nhid:1150, nlayer:3, batch size: 80, bptt:70 
 - optimizer: SGD without momentum, lr:30(constant), wdecay: 1.2e-6 
-- locked dropout: default, embedding dropout: 0.2
+- locked dropout: default from paper, embedding dropout: 0.2 (paper default: 0.1)
 
 **Note**
 - SGD without momentum has been proved empirically better than adaptive optimizer(like Adam) in LM task.
 - Larger regularized model performs better than smaller model without regularizations.
 - Shallow transformer performes worse than regularized LSTM model.
+- Pretrained embedding accelerates training preocess.
 
 
 
@@ -52,7 +54,8 @@ Regularizations for word-level language model with LSTM and transformer.
 2. Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling
 3. A theoretically grounded application of dropout in recurrent neural networks
 4. Revisiting activation regularization for language rnns
-5. Efficient softmax approximation for GPUs
-6. Regularizing and Optimizing LSTM Language Models
-7. https://github.com/pytorch/examples/tree/master/word_language_model
-8. https://github.com/salesforce/awd-lstm-lm
+5. Enriching Word Vectors with Subword Information
+6. Efficient softmax approximation for GPUs
+7. Regularizing and Optimizing LSTM Language Models
+8. https://github.com/pytorch/examples/tree/master/word_language_model
+9. https://github.com/salesforce/awd-lstm-lm

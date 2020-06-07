@@ -7,7 +7,7 @@ from embed_regularize import embedded_dropout
 
 
 class RNNLM(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, TEXT):
         super(RNNLM, self).__init__()
         vocabSize = config.data.vocabSize
         nemd = config.model.rnn.nemd
@@ -20,7 +20,11 @@ class RNNLM(nn.Module):
         self.locked_droph = config.model.rnn.locked_droph
         self.locked_dropo = config.model.rnn.locked_dropo
         
-        self.embedding = nn.Embedding(vocabSize, nemd)
+        if config.model.rnn.pretrained_embedding:
+            self.embedding = nn.Embedding(
+                vocabSize, nemd).from_pretrained(TEXT.vocab.vectors, freeze=False)
+        else:
+            self.embedding = nn.Embedding(vocabSize, nemd)
         self.lockdrop = LockedDropout()
         rnns = [getattr(nn, rnn_type)(
             nemd if l==0 else nhid, nhid if l!=self.nlayer-1 else nemd, 
@@ -28,8 +32,8 @@ class RNNLM(nn.Module):
         self.rnns = nn.ModuleList(rnns)
         self.out = nn.Linear(nemd, vocabSize)
         
-        # if not pretrained embedding
-        self.init_weights()
+        if not config.model.rnn.pretrained_embedding:
+            self.init_weights()
         
         if tie_weight:
             self.out.weight = self.embedding.weight
