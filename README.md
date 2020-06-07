@@ -36,7 +36,7 @@ The repository is partly based on the paper [Regularizing and Optimizing LSTM La
 - Larger regularized model performs better than smaller model without regularizations.
 - Shallow transformer performes worse than regularized LSTM model.
 - Pretrained embedding accelerates training preocess.
-- Current PyTorch version do not support WeightDrop implementation refered in this [paper](https://arxiv.org/abs/1708.02182).
+- Current PyTorch version does not support WeightDrop implementation refered in this [paper](https://arxiv.org/abs/1708.02182).
 - Hyper-parameters tunning (eg. learning schedule) can further improve the results.
 
 
