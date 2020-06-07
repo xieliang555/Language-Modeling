@@ -11,18 +11,20 @@ import argparse
 import yaml
 import math
 
-import data
 import model
 from utils import AttrDict, init_logger
 
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--device', type=str, default="cuda:1")
+parser.add_argument('--device', type=str, default="cuda:2")
 parser.add_argument('--resume_training', action='store_true', 
                     help='if action, resume training')
+parser.add_argument('--seed', type=int, default=1111)
 args = parser.parse_args()
-
+torch.manual_seed(args.seed)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(args.seed)
 
 def train(net, trainLoader, criterion, optimizer, config, logger):
     net.train()
@@ -32,9 +34,18 @@ def train(net, trainLoader, criterion, optimizer, config, logger):
         targets = batch.target
         
         optimizer.zero_grad()
-        outs = net(inputs)
+        outs, raw_output, dropped_output = net(inputs)
         loss = criterion(outs.view(-1, outs.size(-1)), targets.view(-1))
+        
+        # Activiation Regularization
+        if config.model.rnn.alpha:
+            loss = loss + config.model.rnn.alpha*dropped_output.pow(2).mean()
+        # Temporal Activation Regularization (slowness)
+        if config.model.rnn.beta:
+            loss = loss + config.model.rnn.beta*(raw_output[1:]-raw_output[:-1]).pow(2).mean()
+        
         loss.backward()
+#         if config.training.model_type == 'rnn':
         torch.nn.utils.clip_grad_norm_(
             net.parameters(), config.training.grad_clip)
         optimizer.step()
@@ -56,7 +67,7 @@ def evaluate(net, devLoader, criterion):
             inputs = batch.text
             targets = batch.target
 
-            outs = net(inputs)
+            outs, _, _ = net(inputs)
             loss = criterion(outs.view(-1, outs.size(-1)), targets.view(-1))
             epoch_loss += loss.item()
     return epoch_loss / len(devLoader)
@@ -98,6 +109,10 @@ if config.training.optim_type == 'sgd':
 elif config.training.optim_type == 'adam':
     optimizer = optim.Adam(
         net.parameters(), lr=config.training.lr, 
+        weight_decay=config.training.weight_decay)
+elif config.training.optim_type == 'asgd':
+    optimizer = optim.ASGD(
+        net.parameters(), lr=config.training.lr, t0=0, lambd=0., 
         weight_decay=config.training.weight_decay)
 criterion = nn.CrossEntropyLoss()
 

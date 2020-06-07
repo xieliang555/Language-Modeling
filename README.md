@@ -1,102 +1,57 @@
 # Word-level language modeling
-Some training tricks that matter for word-level language modeling using LSTM and transformer
+Regularizations for word-level language model with LSTM and transformer
 
 
-## Requirements
+## Dependencies
 - PyTorch 1.5.0
 - torchtext 0.6.0
 
 
-## Tricks
+## Regularizations
 
->         
-- Default dataset: WikiText-2  
-- Total training epoch: 40   
-- Model scale:  
-   - LSTM
-      - small: 50dim for embedding + 128dim for hidden units + 1hidden layer 
-      - medium: 100dim for embedding + 256dim for hidden units + 2hidden layer
-      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer
-   - Transformer
-      - small: 50dim for embedding+ 128dim for hidden units + 1hidden layer + 1 head
-      - medium: 100dim for embedding + 251dim for hidden units + 2 hidden layer + 2head
-      - large: 150dim for embedding + 512dim for hidden units + 3 hidden layer + 3head
-
-1. **model scale**
-
-|  train/dev ppl   | LSTM          | Transformer |    
-| :--------------: | :-----------: | :---------: | 
-|  small           | 79.17/158.06  |             | 
-| medium           | 55.65/149.35  |             |
-| large            |               |             |
+- setup: nemd:400, nhid:1150, nlayer:3, , batch size: 80, bptt:70, 
+optimizer: SGD without momentum, lr:30(constant), wdecay: 1.2e-6, 
+locked dropout: default, embedding dropout: 0.2
 
 
-2. **batch size**
-
-|train/dev ppl    | LSTM    | Transformer | 
-| :-------------: | :-----: |:----------: | 
-|   32            |         |             | 
-|   64            |         |             |
-|   128           |         |             |
-
-
-3. **pretrained embedding**
-
-|  train/dev ppl  | LSTM    | Transformer | 
-| :-------------: |:------: | :---------: |
-| None            |         |             |
-| GloVe           |         |             | 
-| FastText        |         |             |
-| CharNGram       |         |             |
-   
-   
-4. **tie embedding**
-
-|train/dev ppl    | LSTM    |  Transformer | 
-| :-------------: | :-----: |:-----------: | 
-| False           |         |              | 
-| True            |         |              |
+|                                   | train/dev ppl/ger error  |  epoch  |
+| :------------------------------:  | :----------------------: | :-----: |
+|   LSTM                            |  102.78/168.42/65.64     |    6    | 
+|   + tie embedding[1-2]            |  80.06/158.41/78.35      |    8    |
+|   + variational/locked dropout[3] |  38.19/109.17/70.98      |    40   |
+|   + embedding dropout[3]          |  46.69/101.54            |    40   |
+|   + AR[4]                         |  52.07/97.22             |    40   |
+|   + TAR[4]                        |  53.87/96.91             |    40   |
+|   + adaptive softmax[5]           |                          |         |
+|   + pretrained embedding          |                          |         |
+|   + layer normalize               |                          |         |
+|   + skip connection               |                          |         |
 
 
-5. **embedding dropout**
-
-| drop ratio   | LSTM    | Transformer | 
-| :----------: | :-----: | :---------: |
-| 0            |         |             | 
-| 0.2          |         |             |
-| 0.5          |         |             |
-
-
-6. **optimizer**
-
-|  train/dev  ppl          | LSTM    | Transformer | 
-| :----------------------: | :-----: | :---------: | 
-| sgd                      |         |             |
-| adam                     |         |             | 
-| sgd + momentum(0.9)      |         |             |
-| sgd + weight decay(1e-4) |         |             |
-| adam + weght decay(1e-4) |         |             |
-
-SGD is proved better than adaptive optimizer like Adam in LM task empirically
-
-
-7. **only for LSTM**
-
-|                  | skip connection    |  
-| :--------------: | :----------------: | 
-|  train/dev ppl   |                    |            
+**Note**
+- SGD without momentum has been proved empirically better than adaptive optimizer(like Adam) in LM task.
+- Larger regularized model performs better than smaller model without regularizations.
+- Shallow transformer performes worse than regularized LSTM model.
 
 
 
-## Results on three open datasets
-using the combined tricks of ...
+## Best results on three open datasets
 
-|  train/dev ppl | LSTM    | Transformer |
-|:-------------: | :-----: | :---------: | 
-| WikiText-2     |         |             |
-| WikiText103    |         |             |
-| PennTreeBank   |         |             |
+| train/dev ppl  | LSTM    |   Transformer  |
+|:-------------: | :-----: | :-------------:| 
+| WikiText-2     |         |                |
+| WikiText103    |         |                |
+| PennTreeBank   |         |                |
 
-```{.python .input}
 
-```
+
+
+## Ref
+
+1. Using the Output Embedding to Improve Language Models
+2. Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling
+3. A theoretically grounded application of dropout in recurrent neural networks
+4. Revisiting activation regularization for language rnns
+5. Efficient softmax approximation for GPUs
+6. Regularizing and Optimizing LSTM Language Models
+7. https://github.com/pytorch/examples/tree/master/word_language_model

@@ -1,7 +1,9 @@
 import torch
 import torch.nn as nn
-
 import math
+
+from locked_dropout import LockedDropout
+from embed_regularize import embedded_dropout
 
 
 class RNNLM(nn.Module):
@@ -9,28 +11,29 @@ class RNNLM(nn.Module):
         super(RNNLM, self).__init__()
         vocabSize = config.data.vocabSize
         nemd = config.model.rnn.nemd
-        drop_ratio = config.model.rnn.drop_ratio
         nhid = config.model.rnn.nhid
-        nlayer = config.model.rnn.nlayer
-        activation = config.model.rnn.activation
+        self.nlayer = config.model.rnn.nlayer
         tie_weight = config.model.rnn.tie_weight
-        self.drop_emd = config.model.rnn.drop_emd
+        rnn_type = config.model.rnn.rnn_type
+        self.embed_drop_ratio = config.model.rnn.embed_drop_ratio
+        self.locked_drope = config.model.rnn.locked_drope
+        self.locked_droph = config.model.rnn.locked_droph
+        self.locked_dropo = config.model.rnn.locked_dropo
         
         self.embedding = nn.Embedding(vocabSize, nemd)
-        self.dropout = nn.Dropout(drop_ratio)
-        self.rnn = nn.LSTM(nemd, nhid, nlayer, dropout=drop_ratio, batch_first=False)
-        self.out = nn.Linear(nhid, vocabSize)
+        self.lockdrop = LockedDropout()
+        rnns = [getattr(nn, rnn_type)(
+            nemd if l==0 else nhid, nhid if l!=self.nlayer-1 else nemd, 
+            dropout=0, batch_first=False) for l in range(self.nlayer)]
+        self.rnns = nn.ModuleList(rnns)
+        self.out = nn.Linear(nemd, vocabSize)
         
         # if not pretrained embedding
         self.init_weights()
         
         if tie_weight:
-            if nemd!=nhid:
-                raise ValueError('When using the tied flag, nemd must be equal to nhid')
             self.out.weight = self.embedding.weight
             
-       
-    # init hidden?
     def init_weights(self):
         # init the embedding and softmax layers
         initrange = 0.1
@@ -38,16 +41,21 @@ class RNNLM(nn.Module):
         nn.init.uniform_(self.out.weight, -initrange, initrange)
         nn.init.zeros_(self.out.bias)
     
-    def forward(self, inputs, hidden=None):
-        embeded = self.embedding(inputs)
-        if self.drop_emd:
-            embeded = self.dropout(embeded)
-        outputs, hidden = self.rnn(embeded, hidden)
-        # ?
-        outputs = self.dropout(outputs)
+    def forward(self, inputs):
+        embedded = embedded_dropout(
+            self.embedding, inputs, dropout=self.embed_drop_ratio if self.training else 0)
+        embedded = self.lockdrop(embedded, self.locked_drope)
+        raw_output = embedded
+        for l, rnn in enumerate(self.rnns):
+            raw_output, _ = rnn(raw_output)
+            if l != self.nlayer-1:
+                raw_output = self.lockdrop(raw_output, self.locked_droph)
+        outputs = self.lockdrop(raw_output, self.locked_dropo)
+        dropped_output = outputs
         outputs = self.out(outputs)
-        return outputs
+        return outputs, raw_output, dropped_output
     
+   
     
 class PositionalEncoding(nn.Module):
     def __init__(self, config):
@@ -66,27 +74,29 @@ class PositionalEncoding(nn.Module):
     
     def forward(self, x):
         x = x + self.pe[0:x.size(0),:]
+        return x
 
+    
     
 class TransformerLM(nn.Module):
     def __init__(self, config):
         super(TransformerLM, self).__init__()
         vocabSize = config.data.vocabSize
         self.nemd = config.model.transformer.nemd
-        drop_ratio = config.model.transformer.drop_ratio
-        self.drop_emd = config.model.transformer.drop_emd
+        emd_drop_ratio = config.model.transformer.emd_drop_ratio
+        hidden_drop_ratio = config.model.transformer.hidden_drop_ratio
         nhead = config.model.transformer.nhead
         nhid = config.model.transformer.nhid
         nlayer = config.model.transformer.nlayer
         self.src_mask=None
         tie_weight = config.model.transformer.tie_weight
         
-        self.embedding = nn.Embedding(vocabSize, nemd)
+        self.embedding = nn.Embedding(vocabSize, self.nemd)
         self.pos_encoder = PositionalEncoding(config)
-        self.dropout = nn.Dropout(drop_ratio)
-        encoder_layers = nn.TransformerEncoderLayer(self.nemd, nhead, nhid)
+        self.dropout = nn.Dropout(emd_drop_ratio)
+        encoder_layers = nn.TransformerEncoderLayer(self.nemd, nhead, nhid, hidden_drop_ratio)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayer)
-        self.out = nn.Linear(nemd, vocabSize)
+        self.out = nn.Linear(self.nemd, vocabSize)
         
         # if not pretrained embedding
         self.init_weights()
@@ -97,9 +107,9 @@ class TransformerLM(nn.Module):
     def init_weights(self):
         # init the embedding and softmax layers
         initrange = 0.1
-        nn.init_uniform_(self.embedding.weight, -initrange, initrange)
-        nn.init_uniform_(self.out.weight, -initrange, initrange)
-        nn.init_zeros_(self.out.bias)
+        nn.init.uniform_(self.embedding.weight, -initrange, initrange)
+        nn.init.uniform_(self.out.weight, -initrange, initrange)
+        nn.init.zeros_(self.out.bias)
         
     def _generate_square_subsequent_mask(self, src):
         seq_len = src.size(0)
@@ -112,9 +122,7 @@ class TransformerLM(nn.Module):
             device = src.device
             self.src_mask = self._generate_square_subsequent_mask(src).to(device)
         embeded = self.embedding(src)*math.sqrt(self.nemd)
-        embeded = pos_encoder(embeded)
-        if self.drop_emd:
-            embeded = self.dropout(embeded)
+        embeded = self.dropout(self.pos_encoder(embeded))
         # src_key_padding_mask ?
         output = self.transformer_encoder(embeded, mask=self.src_mask)
         output = self.out(output)
