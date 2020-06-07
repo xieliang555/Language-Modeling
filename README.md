@@ -11,7 +11,7 @@ Regularizations for word-level language model with LSTM and transformer.
 
 |  LSTM                              | train/dev ppl            |  epoch  |
 | :------------------------------    | :----------------------: | :-----: |
-|   Default                          |  102.78/168.42           |    6    | 
+|   Baseline                         |  102.78/168.42           |    6    | 
 |   + tie embedding [1-2]            |  80.06/158.41            |    8    |
 |   + variational/locked dropout [3] |  38.19/109.17            |    40   |
 |   + embedding dropout [3]          |  46.69/101.54            |    40   |
