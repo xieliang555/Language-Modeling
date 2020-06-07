@@ -1,5 +1,5 @@
 # Word-level language modeling
-Regularizations for word-level language model with LSTM and transformer. The repository is based on the paper [Regularizing and Optimizing LSTM Language Models](http://arxiv.org/abs/1708.02182). [Original code here](https://github.com/salesforce/awd-lstm-lm)
+Regularizations for word-level language model with LSTM and transformer. The repository is based on the paper "[Regularizing and Optimizing LSTM Language Models](http://arxiv.org/abs/1708.02182)" [code here](https://github.com/salesforce/awd-lstm-lm) and the PyTorch example [code here](https://github.com/pytorch/examples/tree/master/word_language_model).
 
 
 ## Dependencies
@@ -11,15 +11,15 @@ Regularizations for word-level language model with LSTM and transformer. The rep
 
 |  LSTM                              | train/dev ppl            |  epoch  |
 | :------------------------------    | :----------------------: | :-----: |
-|   Baseline [1]                     |  102.78/168.42           |    6    | 
-|   + tie embedding [2-3]            |  80.06/158.41            |    8    |
-|   + variational/locked dropout [4] |  38.19/109.17            |    40   |
-|   + embedding dropout [4]          |  46.69/101.54            |    40   |
-|   + AR [5]                         |  52.07/97.22             |    40   |
-|   + TAR [5]                        |  53.87/96.91             |    40   |
-|   + fasttext embedding [6]         |  48.80/88.01             |    40   |
-|   + adaptive softmax [7]           |                          |         |
-|   + layer normalize [8]            |                          |         |
+|   Baseline                         |  102.78/168.42           |    6    | 
+|   + tie embedding [1-2]            |  80.06/158.41            |    8    |
+|   + variational/locked dropout [3] |  38.19/109.17            |    40   |
+|   + embedding dropout [3]          |  46.69/101.54            |    40   |
+|   + AR [4]                         |  52.07/97.22             |    40   |
+|   + TAR [4]                        |  53.87/96.91             |    40   |
+|   + fasttext embedding [5]         |  48.80/88.01             |    40   |
+|   + adaptive softmax [6]           |                          |         |
+|   + layer normalize [7]            |                          |         |
 |   + skip connection                |                          |         |
 
 
@@ -51,11 +51,10 @@ Regularizations for word-level language model with LSTM and transformer. The rep
 
 ## Reference
 
-1. https://github.com/pytorch/examples/tree/master/word_language_model
-2. [Using the Output Embedding to Improve Language Models](https://arxiv.org/abs/1608.05859)
-3. [Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling](https://arxiv.org/abs/1611.01462)
-4. [A theoretically grounded application of dropout in recurrent neural networks](https://arxiv.org/abs/1512.05287)
-5. [Revisiting activation regularization for language rnns](https://arxiv.org/abs/1708.01009)
-6. [Enriching Word Vectors with Subword Information](https://arxiv.org/abs/1607.04606)
-7. [Efficient softmax approximation for GPUs](https://arxiv.org/abs/1609.04309)
-8. [Layer Normalization](https://arxiv.org/abs/1607.06450)
+1. [Using the Output Embedding to Improve Language Models](https://arxiv.org/abs/1608.05859)
+2. [Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling](https://arxiv.org/abs/1611.01462)
+3. [A theoretically grounded application of dropout in recurrent neural networks](https://arxiv.org/abs/1512.05287)
+4. [Revisiting activation regularization for language rnns](https://arxiv.org/abs/1708.01009)
+5. [Enriching Word Vectors with Subword Information](https://arxiv.org/abs/1607.04606)
+6. [Efficient softmax approximation for GPUs](https://arxiv.org/abs/1609.04309)
+7. [Layer Normalization](https://arxiv.org/abs/1607.06450)
