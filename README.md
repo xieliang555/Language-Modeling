@@ -55,3 +55,4 @@ Regularizations for word-level language model with LSTM and transformer.
 5. Efficient softmax approximation for GPUs
 6. Regularizing and Optimizing LSTM Language Models
 7. https://github.com/pytorch/examples/tree/master/word_language_model
+8. https://github.com/salesforce/awd-lstm-lm
