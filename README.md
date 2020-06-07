@@ -5,8 +5,8 @@ The code is partly based on the implementation of [Regularizing and Optimizing L
 
 
 ## Dependencies
-- PyTorch 1.5.0
-- torchtext 0.6.0
+- PyTorch 1.4.0
+- torchtext 0.5.0
 
 
 ## Regularizations
