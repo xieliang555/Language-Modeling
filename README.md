@@ -1,5 +1,7 @@
 # Word-level language modeling
-Regularizations for word-level language model with LSTM and transformer. The repository is based on the paper "[Regularizing and Optimizing LSTM Language Models](http://arxiv.org/abs/1708.02182)" [code here](https://github.com/salesforce/awd-lstm-lm) and the PyTorch example [code here](https://github.com/pytorch/examples/tree/master/word_language_model).
+Regularizations for word-level language model with LSTM and transformer. 
+
+The repository is based on the paper [Regularizing and Optimizing LSTM Language Models](https://github.com/salesforce/awd-lstm-lm) and the [PyTorch example](https://github.com/pytorch/examples/tree/master/word_language_model).
 
 
 ## Dependencies
