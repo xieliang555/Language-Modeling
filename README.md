@@ -34,6 +34,7 @@ Regularizations for word-level language model with LSTM and transformer.
 - Larger regularized model performs better than smaller model without regularizations.
 - Shallow transformer performes worse than regularized LSTM model.
 - Pretrained embedding accelerates training preocess.
+- Hyper-parameters tunning (eg. learning schedule) can further improve the results.
 
 
 
