@@ -1,7 +1,7 @@
 # Word-level language modeling
 Regularizations for word-level language model with LSTM and transformer. 
 
-The repository is based on the paper [Regularizing and Optimizing LSTM Language Models](https://github.com/salesforce/awd-lstm-lm) and the [PyTorch example](https://github.com/pytorch/examples/tree/master/word_language_model).
+The repository is partly based on the paper [Regularizing and Optimizing LSTM Language Models](https://github.com/salesforce/awd-lstm-lm) and the [PyTorch example](https://github.com/pytorch/examples/tree/master/word_language_model).
 
 
 ## Dependencies
@@ -36,6 +36,7 @@ The repository is based on the paper [Regularizing and Optimizing LSTM Language 
 - Larger regularized model performs better than smaller model without regularizations.
 - Shallow transformer performes worse than regularized LSTM model.
 - Pretrained embedding accelerates training preocess.
+- Current PyTorch version do not support WeightDrop implementation refered in this [paper](https://arxiv.org/abs/1708.02182).
 - Hyper-parameters tunning (eg. learning schedule) can further improve the results.
 
 
