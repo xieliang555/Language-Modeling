@@ -1,5 +1,5 @@
 # Word-level language modeling
-Regularizations for word-level language model with LSTM and transformer.
+Regularizations for word-level language model with LSTM and transformer. The project is based on the paper "Regularizing and Optimizing LSTM Language Models". [Code here](https://github.com/salesforce/awd-lstm-lm)
 
 
 ## Dependencies
@@ -11,15 +11,15 @@ Regularizations for word-level language model with LSTM and transformer.
 
 |  LSTM                              | train/dev ppl            |  epoch  |
 | :------------------------------    | :----------------------: | :-----: |
-|   Baseline                         |  102.78/168.42           |    6    | 
-|   + tie embedding [1-2]            |  80.06/158.41            |    8    |
-|   + variational/locked dropout [3] |  38.19/109.17            |    40   |
-|   + embedding dropout [3]          |  46.69/101.54            |    40   |
-|   + AR [4]                         |  52.07/97.22             |    40   |
-|   + TAR [4]                        |  53.87/96.91             |    40   |
-|   + fasttext embedding [5]         |  48.80/88.01             |    40   |
-|   + adaptive softmax [6]           |                          |         |
-|   + layer normalize                |                          |         |
+|   Baseline [1]                     |  102.78/168.42           |    6    | 
+|   + tie embedding [2-3]            |  80.06/158.41            |    8    |
+|   + variational/locked dropout [4] |  38.19/109.17            |    40   |
+|   + embedding dropout [4]          |  46.69/101.54            |    40   |
+|   + AR [5]                         |  52.07/97.22             |    40   |
+|   + TAR [5]                        |  53.87/96.91             |    40   |
+|   + fasttext embedding [6]         |  48.80/88.01             |    40   |
+|   + adaptive softmax [7]           |                          |         |
+|   + layer normalize [8]            |                          |         |
 |   + skip connection                |                          |         |
 
 
@@ -40,7 +40,7 @@ Regularizations for word-level language model with LSTM and transformer.
 
 ## Best results on three open datasets
 
-| train/dev ppl  | LSTM    |   Transformer  |
+| train/dev ppl  |   LSTM  |   Transformer  |
 |:-------------: | :-----: | :-------------:|
 | PennTreeBank   |         |                |
 | WikiText-2     |         |                |
@@ -51,12 +51,11 @@ Regularizations for word-level language model with LSTM and transformer.
 
 ## Ref
 
-1. Using the Output Embedding to Improve Language Models
-2. Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling
-3. A theoretically grounded application of dropout in recurrent neural networks
-4. Revisiting activation regularization for language rnns
-5. Enriching Word Vectors with Subword Information
-6. Efficient softmax approximation for GPUs
-7. Regularizing and Optimizing LSTM Language Models
-8. https://github.com/pytorch/examples/tree/master/word_language_model
-9. https://github.com/salesforce/awd-lstm-lm
+1. https://github.com/pytorch/examples/tree/master/word_language_model
+2. Using the Output Embedding to Improve Language Models
+3. Tying Word Vectors and Word Classifiers: A Loss Framework for Language Modeling
+4. A theoretically grounded application of dropout in recurrent neural networks
+5. Revisiting activation regularization for language rnns
+6. Enriching Word Vectors with Subword Information
+7. Efficient softmax approximation for GPUs
+8. Layer Normalization
