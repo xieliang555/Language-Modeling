@@ -1,5 +1,5 @@
 # Word-level language modeling
-Regularizations for word-level language model with LSTM and transformer
+Regularizations for word-level language model with LSTM and transformer.
 
 
 ## Dependencies
@@ -9,13 +9,8 @@ Regularizations for word-level language model with LSTM and transformer
 
 ## Regularizations
 
-- setup: nemd:400, nhid:1150, nlayer:3, , batch size: 80, bptt:70, 
-optimizer: SGD without momentum, lr:30(constant), wdecay: 1.2e-6, 
-locked dropout: default, embedding dropout: 0.2
-
-
 |                                   | train/dev ppl/ger error  |  epoch  |
-| :------------------------------:  | :----------------------: | :-----: |
+| :------------------------------   | :----------------------: | :-----: |
 |   LSTM                            |  102.78/168.42/65.64     |    6    | 
 |   + tie embedding[1-2]            |  80.06/158.41/78.35      |    8    |
 |   + variational/locked dropout[3] |  38.19/109.17/70.98      |    40   |
@@ -27,6 +22,11 @@ locked dropout: default, embedding dropout: 0.2
 |   + layer normalize               |                          |         |
 |   + skip connection               |                          |         |
 
+
+**Setup**
+- nemd:400, nhid:1150, nlayer:3, , batch size: 80, bptt:70, 
+- optimizer: SGD without momentum, lr:30(constant), wdecay: 1.2e-6, 
+- locked dropout: default, embedding dropout: 0.2
 
 **Note**
 - SGD without momentum has been proved empirically better than adaptive optimizer(like Adam) in LM task.
