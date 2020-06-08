@@ -5,8 +5,7 @@ The code is partly based on the implementation of [Regularizing and Optimizing L
 
 
 ## Dependencies
-- PyTorch 1.4.0
-- torchtext 0.5.0
+- install all the dependencies by the command ```pip install -r requirements.txt```
 
 
 ## Regularizations
@@ -32,12 +31,12 @@ The code is partly based on the implementation of [Regularizing and Optimizing L
 - locked dropout: default from paper, embedding dropout: 0.2 (paper default: 0.1)
 
 **Note**
-- SGD without momentum has been proved empirically better than adaptive optimizer(like Adam) in LM task.
-- Larger regularized model performs better than smaller model without regularizations.
-- Shallow transformer performes worse than regularized LSTM model.
-- Pretrained embedding accelerates training preocess.
-- Current PyTorch version does not support WeightDrop implementation refered in this [paper](https://arxiv.org/abs/1708.02182).
-- Hyper-parameters tunning (eg. learning schedule) can further improve the results.
+- SGD without momentum has been proved empirically better than the adaptive optimizer(like Adam) in the LM task.
+- The larger regularized model performs better than the smaller model without regularizations.
+- The shallow transformer performes worse than the regularized LSTM model.
+- The pretrained embedding helps accelerate the training preocess.
+- Current PyTorch version does not support the **WeightDrop** implementation refered in this [paper](https://arxiv.org/abs/1708.02182).
+- The example config provided were not fine-tunned. Hyper-parameters tunning (eg. learning schedule) may further improve the results.
 
 
 

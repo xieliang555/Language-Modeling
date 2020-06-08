@@ -1,0 +1,6 @@
+torch>=1.4.0
+torchtext>=0.5.0
+argparse
+pyyaml
+math
+logging
